@@ -1,34 +1,3 @@
-@font-face{
-	font-family: ShermanSerif;
-	src: url(../resources/sherman/ShermanSerif-Book.otf);
-}
-
-@font-face{
-	font-family: ShermanSerif;
-	src: url(../resources/sherman/ShermanSerif-Bold.otf);
-	font-weight: bold;
-}
-
-@font-face{
-	font-family: ShermanSerif;
-	src: url(../resources/sherman/ShermanSerif-BoldItalic.otf);
-	font-weight: bold;
-	font-style: italic;
-}
-
-@font-face{
-	font-family: ShermanSerif;
-	src: url(../resources/sherman/ShermanSerif-BookItalic.otf);
-	font-weight: bold;
-	font-style: italic;
-}
-
-@font-face{
-	font-family: ShermanSerif;
-	src: url(../resources/sherman/ShermanSerif-Book.otf);
-	font-weight: bold;
-}
-
 body{
 	padding: 0;
 	margin: 0;
@@ -37,6 +6,7 @@ body{
 	background-size: 100%;
 	background-repeat: no-repeat;
 	background-position-x: center;
+	transition: 3s all;
 }
 
 .headertext{
@@ -68,4 +38,19 @@ body{
 
 .spawn.kent{
 	max-width: 100px;
+}
+
+.playpausebutton{
+	position: fixed;
+	background-color: #444;
+	width: 50px;
+	height: 50px;
+	font-size: 20px;
+	bottom: 5%;
+	right: 3%;
+	cursor: pointer;
+}
+
+.playpausebutton .material-icons{
+	font-size: 50px;
 }

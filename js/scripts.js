@@ -1,3 +1,24 @@
+var triggered = false;
+
+function fun(){
+	var num = Math.random();
+	var spawn;
+	var offset = Math.floor(Math.random()*80)
+	if(num <= .33){
+		$('body').append('<img class="spawn kent" style="left:'+ offset + '%" src="resources/sexy.png">');
+	} else if( num > .33 && num <= .66){
+		$('body').append('<img class="spawn otto" style="left:'+ offset + '%" src="resources/sexy_overload.png">');
+	} else{
+		$('body').append('<img class="spawn jimbo" style="left:'+ offset + '%" src="resources/also_sexy.png">');
+	}
+	$('.spawn').animate({
+		top: $(window).height()
+	}, 10000, function(){
+		$(this).remove();
+	});
+}
+
+
 var context = new (window.AudioContext || window.webkitAudioContext)();
 
 var get_song = new XMLHttpRequest();
@@ -26,7 +47,18 @@ get_song.onload = function(){
 
 function onDecoded(buffer){
 	worlds_greatest.audioData.buffer = buffer;
-	window.setTimeout(playPause,1000);
+	$('.playpausebutton .material-icons').html("play_arrow");
+	$('.playpausebutton').css('background-color','#eee')
+	$('.playpausebutton').click(function(){
+		if($('.playpausebutton .material-icons').html() == "play_arrow"){
+			$('.playpausebutton .material-icons').html("pause");
+			playPause();
+			console.log("playing")
+		} else {
+			$('.playpausebutton .material-icons').html("play_arrow");
+			playPause();
+		}
+	});
 }
 
 get_song.send();
@@ -49,48 +81,13 @@ function playPause(){
 	}
 }
 
-function animateRotate(spawn) {
-    // caching the object for performance reasons
-    var $elem = spawn;
-
-    // we use a pseudo object for the animation
-    // (starts from `0` to `angle`), you can name it as you want
-    $({deg: 0}).animate({deg: 2880}, {
-        duration: 40000,
-        step: function(now) {
-            // in the step-callback (that is fired each step of the animation),
-            // you can use the `now` paramter which contains the current
-            // animation-position (`0` up to `angle`)
-            $elem.css({
-                transform: 'rotate(' + now + 'deg)'
-            });
-        }
-    });
-}
-
-function fun(){
-	var num = Math.random();
-	var spawn;
-	var offset = Math.floor(Math.random()*100)
-	if(num <= .33){
-		$('body').append('<img class="spawn kent" style="left:'+ offset + '%" src="resources/sexy.png">');
-	} else if( num > .33 && num <= .66){
-		$('body').append('<img class="spawn otto" style="left:'+ offset + '%" src="resources/sexy_overload.png">');
-	} else{
-		$('body').append('<img class="spawn jimbo" style="left:'+ offset + '%" src="resources/also_sexy.png">');
-	}
-	$('.spawn').animate({
-		top: $(window).height()
-	}, 10000, function(){
-		$(this).remove();
+function rainbody(){
+	rand = Math.random()*100;
+	$('body').css('background-color',function(){
+		return('hsl(' + (rand)%360 + ',100%,50%)');
 	});
 }
 
-function animation(spawn){
-	$(spawn).css('position-x',)
-}
-
-
-
+window.setInterval(rainbody,2000);
 
 window.setInterval(fun,1000);
