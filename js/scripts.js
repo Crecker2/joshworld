@@ -19,49 +19,12 @@ function fun(){
 }
 
 
-var context = new (window.AudioContext || window.webkitAudioContext)();
-
-var get_song = new XMLHttpRequest();
-
-
-var worlds_greatest = { audio: context.createBufferSource(),
-	     audioData: context.createBufferSource(),
-	     modifier: context.createGain(),
-	     file: "../resources/worlds_greatest.mp3",
-	     vocal: "solo",
-	     request: new XMLHttpRequest(),
-	     isPlaying: false,
-	     startTime: null,
-	     seekAsOfLastPause: 0,
-	     duration: 0
-}
-
-allParts = [worlds_greatest];
-
-get_song.open("GET", "resources/worlds_greatest.mp3", true);
-get_song.responseType = "arraybuffer";
-get_song.onload = function(){
-	//request.response is audio
-	context.decodeAudioData(get_song.response, onDecoded);
-}
-
-function onDecoded(buffer){
-	worlds_greatest.audioData.buffer = buffer;
-	$('.playpausebutton .material-icons').html("play_arrow");
-	$('.playpausebutton').css('background-color','#eee')
-	$('.playpausebutton').click(function(){
-		if($('.playpausebutton .material-icons').html() == "play_arrow"){
-			$('.playpausebutton .material-icons').html("pause");
-			playPause();
-			console.log("playing")
-		} else {
-			$('.playpausebutton .material-icons').html("play_arrow");
-			playPause();
-		}
+function rainbody(){
+	rand = Math.random()*100;
+	$('body').css('background-color',function(){
+		return('hsl(' + (rand)%360 + ',100%,50%)');
 	});
 }
-
-get_song.send();
 
 function playPause(){
 	if(worlds_greatest.isPlaying == false) {
@@ -81,13 +44,63 @@ function playPause(){
 	}
 }
 
-function rainbody(){
-	rand = Math.random()*100;
-	$('body').css('background-color',function(){
-		return('hsl(' + (rand)%360 + ',100%,50%)');
-	});
-}
+$('.playpausebutton').click(function(){
+	if(!triggered){
 
+		$('.playpausebutton .material-icons').html("refresh");
+		$('.playpausebutton .material-icons').css('transform', 'rotate(3000deg)');
+
+		triggered = !triggered;
+		context = new (window.AudioContext || window.webkitAudioContext)();
+
+		get_song = new XMLHttpRequest();
+
+
+		worlds_greatest = { audio: context.createBufferSource(),
+			     audioData: context.createBufferSource(),
+			     modifier: context.createGain(),
+			     file: "../resources/worlds_greatest.mp3",
+			     vocal: "solo",
+			     request: new XMLHttpRequest(),
+			     isPlaying: false,
+			     startTime: null,
+			     seekAsOfLastPause: 0,
+			     duration: 0
+		}
+
+		allParts = [worlds_greatest];
+
+		get_song.open("GET", "resources/worlds_greatest.mp3", true);
+		get_song.responseType = "arraybuffer";
+		get_song.onload = function(){
+			//request.response is audio
+			context.decodeAudioData(get_song.response, onDecoded);
+		}
+
+		function onDecoded(buffer){
+			worlds_greatest.audioData.buffer = buffer;
+			$('.playpausebutton .material-icons').css('transition', '0s all');
+			$('.playpausebutton .material-icons').css('transform', 'rotate(0deg)');
+			$('.playpausebutton .material-icons').html("pause");
+			playPause();			
+		}
+
+		get_song.send();
+
+		
+		
+	} else {
+		if($('.playpausebutton .material-icons').html() == "play_arrow"){
+				$('.playpausebutton .material-icons').html("pause");
+				playPause();
+				console.log("playing")
+		} else {
+				$('.playpausebutton .material-icons').html("play_arrow");
+				playPause();
+		}
+	}
+
+});
 window.setInterval(rainbody,2000);
 
 window.setInterval(fun,1000);

@@ -53,4 +53,5 @@ body{
 
 .playpausebutton .material-icons{
 	font-size: 50px;
+	transition: 10s all;
 }
