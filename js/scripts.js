@@ -27,20 +27,20 @@ function rainbody(){
 }
 
 function playPause(){
-	if(worlds_greatest.isPlaying == false) {
-		worlds_greatest.isPlaying = true;
-		worlds_greatest.audio = context.createBufferSource();
-		worlds_greatest.audio.loop = true;
-		worlds_greatest.audio.buffer = worlds_greatest.audioData.buffer;
-		worlds_greatest.startTime = context.currentTime;
-		worlds_greatest.audio.connect(worlds_greatest.modifier);
-		worlds_greatest.modifier.connect(context.destination);
-		worlds_greatest.audio.start(0,worlds_greatest.duration);
+	if(sea_shanty.isPlaying == false) {
+		sea_shanty.isPlaying = true;
+		sea_shanty.audio = context.createBufferSource();
+		sea_shanty.audio.loop = true;
+		sea_shanty.audio.buffer = sea_shanty.audioData.buffer;
+		sea_shanty.startTime = context.currentTime;
+		sea_shanty.audio.connect(sea_shanty.modifier);
+		sea_shanty.modifier.connect(context.destination);
+		sea_shanty.audio.start(0,sea_shanty.duration);
 	} else {
-		worlds_greatest.isPlaying = false;
-		worlds_greatest.audio.stop();
-		worlds_greatest.seekAsOfLastPause = context.currentTime - worlds_greatest.startTime;
-		worlds_greatest.duration += worlds_greatest.seekAsOfLastPause;
+		sea_shanty.isPlaying = false;
+		sea_shanty.audio.stop();
+		sea_shanty.seekAsOfLastPause = context.currentTime - sea_shanty.startTime;
+		sea_shanty.duration += sea_shanty.seekAsOfLastPause;
 	}
 }
 
@@ -56,10 +56,10 @@ $('.playpausebutton').click(function(){
 		get_song = new XMLHttpRequest();
 
 
-		worlds_greatest = { audio: context.createBufferSource(),
+		sea_shanty = { audio: context.createBufferSource(),
 			     audioData: context.createBufferSource(),
 			     modifier: context.createGain(),
-			     file: "../resources/worlds_greatest.mp3",
+			     file: "../resources/Sea_Shanty2.mp3",
 			     vocal: "solo",
 			     request: new XMLHttpRequest(),
 			     isPlaying: false,
@@ -68,9 +68,9 @@ $('.playpausebutton').click(function(){
 			     duration: 0
 		}
 
-		allParts = [worlds_greatest];
+		allParts = [sea_shanty];
 
-		get_song.open("GET", "resources/worlds_greatest.mp3", true);
+		get_song.open("GET", "resources/Sea_Shanty2.mp3", true);
 		get_song.responseType = "arraybuffer";
 		get_song.onload = function(){
 			//request.response is audio
@@ -78,7 +78,7 @@ $('.playpausebutton').click(function(){
 		}
 
 		function onDecoded(buffer){
-			worlds_greatest.audioData.buffer = buffer;
+			sea_shanty.audioData.buffer = buffer;
 			$('.playpausebutton .material-icons').css('transition', '0s all');
 			$('.playpausebutton .material-icons').css('transform', 'rotate(0deg)');
 			$('.playpausebutton .material-icons').html("pause");
